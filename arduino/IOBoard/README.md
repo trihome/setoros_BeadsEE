@@ -2,7 +2,15 @@
 
 ![Board](./BeadsEe.png "3D")
 
+- 回路図
+  - [PDF](./BeadsEe_sch.pdf/)
+
+- 基板パターン図
+  - [PDF](./BeadsEe_pcb.pdf)
+
 ## 1.Requirement
+
+- KiCAD 5.x
 
 ## 4.Note
 
