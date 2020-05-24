@@ -43,8 +43,8 @@ private:
     //現在のステータス
     int status;
     //ステータス表示LED
-    StatusLed slz = StatusLed(7);
-    StatusLed sla = StatusLed(6);
+    StatusLed slz = StatusLed(GPIOOUT_STAT_Z);
+    StatusLed sla = StatusLed(GPIOOUT_STAT_A);
     //サーボモータ
     ServoAcc svz; //Z軸（上下）
     ServoAcc sva; //A軸（掴み離し）

@@ -6,6 +6,8 @@
 
 #include <MsTimer2.h>
 #include <Wire.h>
+//自作
+#include "Config.h"
 #include "StatusLed.h"
 #include "ServoAcc.h"
 #include "CommI2c.h"
@@ -18,13 +20,6 @@
 
 //シーケンス制御
 Sequence seq;
-
-//------------------------------------------------
-//設定定数
-//------------------------------------------------
-#define SERIAL_BAUDRATE 115200
-#define GPIOIN_RET 8
-#define GPIOIN_ACT 9
 
 //------------------------------------------------
 //初期化
@@ -80,19 +75,8 @@ void loop()
   //シリアルの受付
   ProcSerial();
 
-  //ボタン受付
-  if (digitalRead(GPIOIN_RET))
-  {
-    //離し
-    seq.Multi(MultiAction::RELEASE);
-    Serial.println("+ done RELEASE");
-  }
-  else if (digitalRead(GPIOIN_ACT))
-  {
-    //掴み
-    seq.Multi(MultiAction::GRAB);
-    Serial.println("+ done GRAB");
-  }
+  //ボタン入力の受付
+  ProcButton();
 }
 
 //------------------------------------------------
@@ -115,10 +99,11 @@ void ProcSerial()
     switch (sCommand)
     {
     case 'm':
-      //レスポンス確認
-      Serial.print("+ beadsee ok ");
+      //バージョン確認
+      //（上位の制御系からのレスポンスチェック受付）
+      Serial.print("+ beadsee ok ;");
       Serial.print(__DATE__);
-      Serial.print(" ");
+      Serial.print(";");
       Serial.println(__TIME__);
       break;
     case 'h':
@@ -126,12 +111,15 @@ void ProcSerial()
       Serial.println("-- Help --");
       Serial.println(" - Multi Action");
       Serial.println("    q: zero return");
-      Serial.println("    w: GRAB (or ACT Button)");
-      Serial.println("    e: RELEASE (or RET Button)");
+      Serial.println("    w: GRAB (or Push 'ACT' Button)");
+      Serial.println("    e: RELEASE (or Push 'RET' Button)");
       Serial.println(" - Single Action");
       Serial.println("              <RET>      <ACT>");
       Serial.println("    Z AXIS... z: UP      x: DOWN");
       Serial.println("    A AXIS... a: RELEASE s: GRAB");
+      Serial.println(" - Optional");
+      Serial.println("    h: Show this help");
+      Serial.println("    m: Version");
       break;
     case 'v':
       //ステータス表示
@@ -190,6 +178,25 @@ void ProcSerial()
     default:
       break;
     }
+  }
+}
+
+//------------------------------------------------
+//ボタン入力の受付処理
+//------------------------------------------------
+void ProcButton()
+{
+  if (digitalRead(GPIOIN_RET))
+  {
+    //離し
+    seq.Multi(MultiAction::RELEASE);
+    Serial.println("+ done RELEASE");
+  }
+  else if (digitalRead(GPIOIN_ACT))
+  {
+    //掴み
+    seq.Multi(MultiAction::GRAB);
+    Serial.println("+ done GRAB");
   }
 }
 

@@ -5,6 +5,8 @@
 //---------------------------------------------------------
 
 #include <arduino.h>
+//自作
+#include "Config.h"
 #include "StatusLed.h"
 
 //コンストラクタ

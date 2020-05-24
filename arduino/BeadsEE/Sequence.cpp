@@ -5,6 +5,8 @@
 //---------------------------------------------------------
 
 #include <arduino.h>
+//自作
+#include "Config.h"
 #include "Sequence.h"
 
 //コンストラクタ
@@ -16,8 +18,8 @@ Sequence::Sequence()
 void Sequence::Init()
 {
     //サーボZ軸、A軸の設定
-    svz.init(10, 37, 50);
-    sva.init(11, 40, 60);
+    svz.init(GPIOOUT_SERVO_Z, 37, 50);
+    sva.init(GPIOOUT_SERVO_A, 40, 60);
 }
 
 //単動動作

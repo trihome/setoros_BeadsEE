@@ -3,7 +3,10 @@
 //  サーボ制御
 //  2020 myasu
 //---------------------------------------------------------
+
 #include "ServoAcc.h"
+//自作
+#include "Config.h"
 
 //コンストラクタ
 ServoAcc::ServoAcc()
