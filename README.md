@@ -1,5 +1,10 @@
 # アイロンビーズセッター　エンドエフェクタ制御ノード
 
+- ROS Node (this)
+- [Arduino Source](./arduino/BeadsEE)
+- [Arduino Shield](./arduino/IOBoard)
+
+
 ## 1.Requirement
 
 * RaspberryPi 3B+, 4B+

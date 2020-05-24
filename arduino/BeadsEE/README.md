@@ -48,13 +48,24 @@ Y軸（上下）操作
 -- Help --
  - Multi Action
     q: zero return
-    w: GRAB (or ACT Button)
-    e: RELEASE (or RET Button)
+    w: GRAB (or Push 'ACT' Button)
+    e: RELEASE (or Push 'RET' Button)
  - Single Action
               <RET>      <ACT>
     Z AXIS... z: UP      x: DOWN
     A AXIS... a: RELEASE s: GRAB
+ - Optional
+    h: Show this help
+    m: Version
 ```
+
+バージョン情報表示例
+
+```
++ beadsee ok ;May 24 2020;18:22:52
+```
+
+プログラム名と、ビルド時刻が表示されます。
 
 
 ## 1.Requirement
