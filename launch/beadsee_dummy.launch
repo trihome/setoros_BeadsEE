@@ -1,0 +1,4 @@
+<launch>
+    <!-- 受信ノード -->
+    <node name="beadsee_dummy" pkg="beadsee" type="BeadsEe_dummy.py" output="screen" respawn="true"/>
+</launch>
