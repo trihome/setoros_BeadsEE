@@ -41,7 +41,7 @@ class BeadsEe:
             ポート名。無指定の場合はシリアル制御をしない
         """
         # ノードの初期化（名称設定、ログレベル指定）
-        rospy.init_node(self.SELFNODE, log_level=rospy.INFO)
+        rospy.init_node(self.SELFNODE + "_dummy", log_level=rospy.INFO)
 
         # 指定のトピックからメッセージを受信
         self._sub = rospy.Subscriber(self.SELFTOPIC, String, self._subscribe)
@@ -51,17 +51,17 @@ class BeadsEe:
         # 送信周期(Hz)を設定
         self._rate = rospy.Rate(2)
 
-        # エンドエフェクタ制御のインスタンスを生成
-        if argCOM is None:
-            # ポート名が指定されていないときはデフォルト
-            self._beads = BeadsEeSerial()
-        else:
-            self._beads = BeadsEeSerial(argCom=argCOM)
+        # # エンドエフェクタ制御のインスタンスを生成
+        # if argCOM is None:
+        #     # ポート名が指定されていないときはデフォルト
+        #     self._beads = BeadsEeSerial()
+        # else:
+        #     self._beads = BeadsEeSerial(argCom=argCOM)
 
-        # エンドエフェクタ制御の状態確認スレッド
-        thread_ser = threading.Thread(target=self._eventThread_BeadsEe)
-        thread_ser.daemon = True
-        thread_ser.start()
+        # # エンドエフェクタ制御の状態確認スレッド
+        # thread_ser = threading.Thread(target=self._eventThread_BeadsEe)
+        # thread_ser.daemon = True
+        # thread_ser.start()
 
         # 起動完了メッセージ
         #起動メッセージ
@@ -69,6 +69,8 @@ class BeadsEe:
             os.path.basename(__file__),
             self.SELFTOPIC_RES,
             self.SELFTOPIC))
+        
+        self._publish("Waiting")
 
     def _subscribe(self, data):
         """Subscribeコールバック"""
@@ -79,9 +81,17 @@ class BeadsEe:
                       (self.__class__.__name__, command))
         # 受信コマンドの解析と処理分岐
         if command == "grub":
-            self._beads.grub()
+            # self._beads.grub()
+            self._publish("Moving")
+            time.sleep(0.5)
+            self._publish("Goal")
+            self._publish("Waiting")
         elif command == "release":
-            self._beads.release()
+            # self._beads.release()
+            self._publish("Moving")
+            time.sleep(0.5)
+            self._publish("Goal")
+            self._publish("Waiting")
         else:
             rospy.loginfo("[%s] ! Command error" %
                           (self.__class__.__name__))
